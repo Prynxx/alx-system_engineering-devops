@@ -1,14 +1,4 @@
 #!/usr/bin/env bash
-# This script gracefully reloads Gunicorn workers
-
-# Find the process IDs of the Gunicorn workers
-worker_pids=$(pgrep -f "gunicorn")
-
-# Send a graceful reload signal to each worker
-for pid in $worker_pids; do
-    kill -HUP "$pid"
-done
-
-# Print a message to the console
-echo "OK"
-
+# Gracefully reloads Gunicorn.
+#shellcheck disable=SC2009
+ps aux | grep gunicorn | awk '{ print $2 }' | xargs kill -HUP
